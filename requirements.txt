@@ -1,0 +1,3 @@
+fastapi
+uvicorn
+motor # input output for mongodb query in python
