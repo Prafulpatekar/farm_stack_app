@@ -1,24 +1,25 @@
 from model import Todo
-import motor.motor_asyncio as mongoMotor
+import motor.motor_asyncio
 
-client = mongoMotor.AsyncIOMotorClient('mongodb://localhost:27017')
+client = motor.motor_asyncio.AsyncIOMotorClient('mongodb://localhost:27017')
 
-database = client.TodoList
-collection = database.todo
+database = client.FarmStack
+collection = database.TodoList
 
 async def fetch_one(title):
-    document = collection.find_one({"title":title})
+    document = await collection.find_one({"title":title})
     return document
 
 async def fetch_all():
     todos = []
-    cursor = await collection.find({})
+    cursor = collection.find({})
     async for document in cursor:
         todos.append(Todo(**document))
     return todos
 
 async def create_todo(todo):
     document = todo
+    print("hehe",document)
     result = await collection.insert_one(document)
     return document
 
